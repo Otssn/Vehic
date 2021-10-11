@@ -1,4 +1,4 @@
-﻿@model Vehicles.API.Data.Entities.VehicleTypes
+﻿@model Vehicles.API.Data.Entities.DocumentTypes
 
 @{
     ViewData["Title"] = "Create";
@@ -12,7 +12,7 @@
     <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <partial name="_VehiclesType" />
+            <partial name="_DocumentTypes" />
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-success">Regresar</a>

@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Vehicles.API.Data;
 using Vehicles.API.Data.Entities;
 
 namespace Vehicles.API.Controllers
 {
-    public class VehicleTypesController : Controller
+    public class ProceduresController : Controller
     {
         private readonly DataContext _context;
 
-        public VehicleTypesController(DataContext context)
+        public ProceduresController(DataContext context)
         {
             _context = context;
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.VehicleTypes.ToListAsync());
+            return View(await _context.Procedures.ToListAsync());
         }
         public IActionResult Create()
         {
@@ -28,13 +26,13 @@ namespace Vehicles.API.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description")] VehicleTypes vehicleType)
+        public async Task<IActionResult> Create(Procedures procedures)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Add(vehicleType);
+                    _context.Add(procedures);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -42,55 +40,7 @@ namespace Vehicles.API.Controllers
                 {
                     if (dbupdate.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe este tipo de vehiculo.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbupdate.InnerException.Message);
-                    }
-                }catch(Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
-            }
-            return View(vehicleType);
-        }
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var vehicleType = await _context.VehicleTypes.FindAsync(id);
-            if (vehicleType == null)
-            {
-                return NotFound();
-            }
-            return View(vehicleType);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description")] VehicleTypes vehicleType)
-        {
-            if (id != vehicleType.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(vehicleType);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException dbupdate)
-                {
-                    if (dbupdate.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe este tipo de vehiculo.");
+                        ModelState.AddModelError(string.Empty, "Ya existe este procedimiento.");
                     }
                     else
                     {
@@ -102,8 +52,57 @@ namespace Vehicles.API.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
-            
-            return View(vehicleType);
+            return View(procedures);
+        }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Procedures procedures = await _context.Procedures.FindAsync(id);
+            if (procedures == null)
+            {
+                return NotFound();
+            }
+            return View(procedures);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Procedures procedures)
+        {
+            if (id != procedures.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(procedures);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbupdate)
+                {
+                    if (dbupdate.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe este procedimiento.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbupdate.InnerException.Message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+
+            return View(procedures);
         }
         public async Task<IActionResult> Delete(int? id)
         {
@@ -112,21 +111,22 @@ namespace Vehicles.API.Controllers
                 return NotFound();
             }
 
-            var vehicleType = await _context.VehicleTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (vehicleType == null)
+            Procedures procedures = await _context.Procedures
+                    .FirstOrDefaultAsync(m => m.Id == id);
+            if (procedures == null)
             {
                 return NotFound();
             }
 
-            _context.VehicleTypes.Remove(vehicleType);
+            _context.Procedures.Remove(procedures);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VehicleTypeExists(int id)
+        private bool ProceduresExists(int id)
         {
-            return _context.VehicleTypes.Any(e => e.Id == id);
+            return _context.Procedures.Any(e => e.Id == id);
         }
     }
 }
+

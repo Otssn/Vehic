@@ -1,26 +1,28 @@
-﻿@model Vehicles.API.Data.Entities.VehicleTypes
+﻿@model Vehicles.API.Data.Entities.Brand
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Crear</h1>
+<h1>Editar</h1>
 
-<h4>Tipos de vehiculos</h4>
+<h4>Marcas</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <partial name="_VehiclesType" />
+            <input type="hidden" asp-for="Id" />
+
+            <partial name="_Brand" />
+
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-success">Regresar</a>
             </div>
         </form>
     </div>
 </div>
-
 
 
 @section Scripts {
