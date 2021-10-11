@@ -25,24 +25,6 @@ namespace Vehicles.API.Controllers
             return View(await _context.VehicleTypes.ToListAsync());
         }
 
-        // GET: VehicleTypes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var vehicleType = await _context.VehicleTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (vehicleType == null)
-            {
-                return NotFound();
-            }
-
-            return View(vehicleType);
-        }
-
         // GET: VehicleTypes/Create
         public IActionResult Create()
         {
@@ -58,9 +40,26 @@ namespace Vehicles.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vehicleType);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(vehicleType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbupdate)
+                {
+                    if (dbupdate.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe este tipo de vehiculo.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbupdate.InnerException.Message);
+                    }
+                }catch(Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
             }
             return View(vehicleType);
         }
@@ -99,20 +98,25 @@ namespace Vehicles.API.Controllers
                 {
                     _context.Update(vehicleType);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException dbupdate)
                 {
-                    if (!VehicleTypeExists(vehicleType.Id))
+                    if (dbupdate.InnerException.Message.Contains("duplicate"))
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty, "Ya existe este tipo de vehiculo.");
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError(string.Empty, dbupdate.InnerException.Message);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
             }
+            
             return View(vehicleType);
         }
 
@@ -131,15 +135,6 @@ namespace Vehicles.API.Controllers
                 return NotFound();
             }
 
-            return View(vehicleType);
-        }
-
-        // POST: VehicleTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var vehicleType = await _context.VehicleTypes.FindAsync(id);
             _context.VehicleTypes.Remove(vehicleType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
