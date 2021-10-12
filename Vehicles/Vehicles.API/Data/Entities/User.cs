@@ -40,7 +40,7 @@ namespace Vehicles.API.Data.Entities
         //TODO: Fix the images path
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://https://localhost:44371/images/noimage.png"
+            ? $"https://localhost:44371/images/noimage.png"
             : $"https://vehiclessalazar.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
@@ -48,5 +48,7 @@ namespace Vehicles.API.Data.Entities
 
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
+
+        public ICollection<Vehicle> Vehicles { get; set; }
     }
 }
