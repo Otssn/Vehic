@@ -34,7 +34,7 @@ namespace Vehicles.API.Helpers
             return list;
         }
 
-        public IEnumerable<SelectListItem> GetCombosDocumentTypes()
+        public IEnumerable<SelectListItem> GetCombosProcedures()
         {
             List<SelectListItem> list = _dataContext.Procedures.Select(x => new SelectListItem
             {
@@ -53,7 +53,7 @@ namespace Vehicles.API.Helpers
             return list;
         }
 
-        public IEnumerable<SelectListItem> GetCombosProcedures()
+        public IEnumerable<SelectListItem> GetCombosDocumentTypes()
         {
             List<SelectListItem> list = _dataContext.DocumentTypes.Select(x => new SelectListItem
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vehicles.API.Data.Entities;
-using Vehicles.API.Views;
+using Vehicles.API.Models;
 
 namespace Vehicles.API.Helpers
 {

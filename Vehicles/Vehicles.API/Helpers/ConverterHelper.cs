@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vehicles.API.Data;
 using Vehicles.API.Data.Entities;
-using Vehicles.API.Views;
+using Vehicles.API.Models;
 
 namespace Vehicles.API.Helpers
 {
@@ -23,7 +23,7 @@ namespace Vehicles.API.Helpers
         {
             return new User
             {
-                Addres = model.Addres,
+                Addres = model.Address,
                 Document = model.Document,
                 DocumentType = await _context.DocumentTypes.FindAsync(model.DocumentTypeId),
                 Email = model.Email,
@@ -33,7 +33,7 @@ namespace Vehicles.API.Helpers
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.Email,
-                userType = model.userType,
+                userType = model.UserType,
             };
         }
 
@@ -41,7 +41,7 @@ namespace Vehicles.API.Helpers
         {
             return new UserViweModel
             {
-                Addres = user.Addres,
+                Address = user.Addres,
                 Document = user.Document,
                 DocumentTypeId = user.DocumentType.Id,
                 DocumentTypes = _combosHelper.GetCombosDocumentTypes(),
@@ -51,7 +51,7 @@ namespace Vehicles.API.Helpers
                 ImageId = user.ImageId,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
-                userType = user.userType,
+                UserType = user.userType,
             };
         }
     }

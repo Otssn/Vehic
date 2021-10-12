@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vehicles.API.Data;
+using Vehicles.API.Data.Entities;
 using Vehicles.API.Helpers;
-using Vehicles.API.Views;
+using Vehicles.API.Models;
+using Vehicles.commons.Enums;
 
 namespace Vehicles.API.Controllers
 {
@@ -43,6 +45,28 @@ namespace Vehicles.API.Controllers
                 DocumentTypes = _combosHelper.GetCombosDocumentTypes()
             };
 
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(UserViweModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = Guid.Empty;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _converterHelper.ToUserAsync(model, imageId, true);
+                user.userType = UserType.User;
+                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserToRoleAsync(user, user.userType.ToString());
+                return RedirectToAction(nameof(Index));
+            }
+            model.DocumentTypes = _combosHelper.GetCombosDocumentTypes();
             return View(model);
         }
     }
