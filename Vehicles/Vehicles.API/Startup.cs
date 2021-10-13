@@ -57,6 +57,7 @@ namespace Vehicles.API
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IBlobHelper, BlolbHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IMailHelper, MailHelper>();
 
         }
 

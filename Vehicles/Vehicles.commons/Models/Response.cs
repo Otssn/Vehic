@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vehicles.commons.Models
 {
-    class Response
+    public class Response
     {
         public bool IsSuccess { get; set; }
 
