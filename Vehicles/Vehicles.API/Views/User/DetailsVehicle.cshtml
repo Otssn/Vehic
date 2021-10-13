@@ -1,65 +1,65 @@
-﻿@model Vehicles.API.Data.Entities.User
+﻿@model Vehicles.API.Data.Entities.Vehicle
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-<h2>Vehículos</h2>
+<h2>Historia</h2>
 
 <div>
-    <h4>Usuario</h4>
+    <h4>Vehiculo</h4>
     <hr />
     <div class="row">
         <div class="col-md-8">
             <dl class="row">
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.FullName)
+                    @Html.DisplayNameFor(model => model.VehicleType.Description)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.FullName)
+                    @Html.DisplayFor(model => model.VehicleType.Description)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.DocumentType.Description)
+                    @Html.DisplayNameFor(model => model.Brand.Description)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.DocumentType.Description)
+                    @Html.DisplayFor(model => model.Brand.Description)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Document)
+                    @Html.DisplayNameFor(model => model.Model)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Document)
+                    @Html.DisplayFor(model => model.Model)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Email)
+                    @Html.DisplayNameFor(model => model.Plaque)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Email)
+                    @Html.DisplayFor(model => model.Plaque)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Addres)
+                    @Html.DisplayNameFor(model => model.Line)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Addres)
+                    @Html.DisplayFor(model => model.Line)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                    @Html.DisplayNameFor(model => model.Remarks)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.PhoneNumber)
+                    @Html.DisplayFor(model => model.Remarks)
                 </dd>
             </dl>
         </div>
         <div class="col-md-4">
-            <img src="@Model.ImageFullPath" style="width: 200px; height: 200px; border-radius: 150px;" />
+            <img src="@Model.ImageFullPath" style="width: 200px; height: 200px; max-width: 100%; height: auto;" />
         </div>
     </div>
 </div>
 <div>
-    <a asp-action="AddVehicle" asp-route-id="@Model.Id" class="btn btn-primary">Adicionar Vehículo</a>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar Usuario</a>
-    <a asp-action="Index" class="btn btn-success">Regresar</a>
+    <a asp-action="AddHistory" asp-route-id="@Model.Id" class="btn btn-primary">Adicionar Historia</a>
+    <a asp-action="EditVehicle" asp-route-id="@Model.Id" class="btn btn-warning">Editar Vehículo</a>
+    <a asp-action="Details" asp-route-id="@Model.User.Id" class="btn btn-success">Regresar</a>
 </div>
 <br />
 
@@ -67,70 +67,70 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Vehículos</h3>
+                <h3 class="panel-title">Historias</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-hover table-responsive table-striped" id="MyTable">
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Plaque)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().Date)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().VehicleType.Description)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().User.FullName)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Brand.Description)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().Mileage)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Line)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().Remarks)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Model)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().DetailsCount)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().HistoriesCount)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().TotalLabor)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().VehiclePhotosCount)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().TotalSpareParts)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().ImageFullPath)
+                                @Html.DisplayNameFor(model => model.Histories.FirstOrDefault().Total)
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Vehicles)
+                        @foreach (var item in Model.Histories)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Plaque)
+                                    @Html.DisplayFor(modelItem => item.DateLocal)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.VehicleType.Description)
+                                    @Html.DisplayFor(modelItem => item.User.FullName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Brand.Description)
+                                    @Html.DisplayFor(modelItem => item.Mileage)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Line)
+                                    @Html.DisplayFor(modelItem => item.Remarks)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Model)
+                                    @Html.DisplayFor(modelItem => item.DetailsCount)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.HistoriesCount)
+                                    @Html.DisplayFor(modelItem => item.TotalLabor)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.VehiclePhotosCount)
+                                    @Html.DisplayFor(modelItem => item.TotalSpareParts)
                                 </td>
                                 <td>
-                                    <img src="@item.ImageFullPath" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                                    @Html.DisplayFor(modelItem => item.Total)
                                 </td>
                                 <td>
-                                    <a asp-action="EditVehicle" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                    <a asp-action="DetailsVehicle" asp-route-id="@item.Id" class="btn btn-info">Historias<i class="glyphicon glyphicon-align-justify"></i></a>
+                                    <a asp-action="EditHistory" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                    <a asp-action="DetailsHistory" asp-route-id="@item.Id" class="btn btn-info">Detalle<i class="glyphicon glyphicon-align-justify"></i></a>
                                     <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
                                 </td>
                             </tr>
@@ -158,10 +158,11 @@
                 "aLengthMenu": [
                     [25, 50, 100, 200, -1],
                     [25, 50, 100, 200, "Todos"]
-                ]
+                ],
+                "order": [[0, "desc"]]
             });
             // Delete item
-            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/User/DeleteVehicle/', false);
+            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/User/DeleteHistory/', false);
         });
     </script>
 }

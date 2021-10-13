@@ -32,6 +32,11 @@ namespace Vehicles.API.Data.Entities
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
+        [Display(Name = "Mecanico")]
+        [JsonIgnore]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public User User { get; set; }
+
         public ICollection<Detail> Details { get; set; }
 
         [Display(Name = "# Detalles")]
