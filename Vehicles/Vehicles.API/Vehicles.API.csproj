@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Vehicles.commons\Vehicles.commons.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\API\" />
+  </ItemGroup>
+
 </Project>

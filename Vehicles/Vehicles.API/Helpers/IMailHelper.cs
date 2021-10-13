@@ -6,7 +6,7 @@ using Vehicles.commons.Models;
 
 namespace Vehicles.API.Helpers
 {
-    interface IMailHelper
+    public interface IMailHelper
     {
         Response SendMail(string to, string subject, string body);
     }
