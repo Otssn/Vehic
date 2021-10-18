@@ -40,7 +40,7 @@ namespace Vehicles.API.Data.Entities
         //TODO: Fix the images path
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:44371/images/noimage.png"
+            ? $"https://vehiclesapiestebanp.azurewebsites.net/images/noimage.png"
             : $"https://vehiclesotssn.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
